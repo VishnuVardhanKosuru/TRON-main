@@ -1,0 +1,39 @@
+Here's the stack that fits everything we've locked in — architecture, storage format, and the visual language.
+
+**Framework: Next.js (React)**
+Already the plan for Vercel hosting — App Router gives you file-based routing that maps cleanly onto your 5 screens, and API routes handle the rule-based classifier without a separate backend.
+
+**Styling: Tailwind CSS**
+Fast to hit the "futuristic but simple" look — hairline borders, precise spacing, dark-mode-first via `dark:` variants — without hand-rolling a CSS system. Pairs naturally with the CSS-variable-driven token approach the mockups used (surface/text/border tokens).
+
+**Icons: Tabler Icons (React package)**
+Exactly what every mockup above used — consistent look, outline style matching the restrained aesthetic, 5,800+ icons so you won't run out for 18 content types.
+
+**Animation: Framer Motion**
+This is the one doing real work for your two signature interactions — the strikethrough-and-settle-and-fade on task completion, and the capture bubble sliding/fading in during the chat-style capture flow. Declarative, and it respects `prefers-reduced-motion` automatically.
+
+**Local-first storage: Dexie.js (IndexedDB wrapper)**
+IndexedDB directly is painful to work with; Dexie gives you a clean query API for the local-first read/write path we designed, with Firestore syncing in behind it.
+
+**Sync/backend: Firebase SDK** (Firestore, Auth, Cloud Functions, FCM)
+Already decided — the Firebase Web SDK plugs straight into this stack with no extra glue.
+
+**Graph visualization: `react-force-graph` (2D mode)**
+Purpose-built for exactly the constellation/Synapse screen — force-directed layout, tap-to-zoom, pan/pinch on mobile, node sizing/coloring by props — meaningfully less work than hand-rolling D3 force simulation yourself.
+
+**Markdown + linking: `react-markdown` + a custom remark plugin**
+Renders your markdown-native content, with a small custom plugin to detect `[[wiki-link]]` syntax and turn it into clickable, styled links — this is the one genuinely custom piece, everything else above is off-the-shelf.
+
+**Recurrence: `rrule.js`**
+For Routines — handles the daily/weekly-on-specific-days/interval math correctly (the standard iCal recurrence format we discussed), rather than hand-writing date logic that breaks on edge cases.
+
+**Dates/timeline: `date-fns`**
+Lightweight date parsing/formatting for the Calendar's hourly timeline and relative-date detection ("tomorrow," "next Friday") in the classifier.
+
+**Encryption: `libsodium-wrappers`**
+Client-side encryption before anything reaches Firebase — already scoped earlier, this is the concrete package.
+
+**PWA/offline: `next-pwa` (Workbox under the hood)**
+Handles the service worker, offline capture queue, and installability (needed for iOS home-screen push to work at all, as we covered earlier).
+
+That's the full stack, and every piece maps to something specific we already designed — nothing speculative bolted on. Want me to scaffold the actual project structure next?

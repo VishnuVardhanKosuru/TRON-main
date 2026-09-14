@@ -1,0 +1,403 @@
+@import "tailwindcss";
+
+/*
+  Typography is deliberately offline-only. TRON runs on a phone that may have no
+  internet at all, so there is no webfont request anywhere in the app — the
+  stack below resolves to a geometric-ish grotesque on Android, iOS and macOS.
+
+  To use the original Space Grotesk instead: drop SpaceGrotesk.woff2 into
+  src/app/fonts/, then in layout.tsx:
+    import localFont from "next/font/local";
+    const display = localFont({ src: "./fonts/SpaceGrotesk.woff2",
+                                variable: "--font-display", display: "swap" });
+  and add `display.variable` to the <html> className. Nothing else changes.
+*/
+@theme {
+  --font-sans: var(--font-display, "Space Grotesk"), "Google Sans Text", "Roboto",
+               ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+
+/*
+  TRON — electric blue on deep navy.
+
+  The palette is built from three blues so the interface reads as one system
+  rather than a spread of neon: a deep signal blue for structure, a bright
+  cyan for the single most important thing on screen, and a pale ice tone for
+  text that needs to sit above the glass. Glow is used sparingly and only on
+  interactive or live elements — it should feel like backlighting, not RGB.
+*/
+
+:root {
+  /* Surfaces — near-black navy rather than pure black, so glass reads as glass */
+  --surface-1: #05070d;
+  --surface-2: rgba(148, 197, 255, 0.06);
+
+  /* Borders */
+  --border: rgba(148, 197, 255, 0.10);
+  --border-strong: rgba(148, 197, 255, 0.18);
+  --border-accent: rgba(14, 165, 233, 0.42);
+
+  /* Accent — electric blue */
+  --fill-accent: #0ea5e9;
+  --fill-accent-bright: #38bdf8;
+  --fill-accent-deep: #2563eb;
+  --on-accent: #04121f;
+  --bg-accent-muted: rgba(14, 165, 233, 0.14);
+  --bg-danger: rgba(244, 63, 94, 0.15);
+
+  /* Text */
+  --text-primary: #e6f1ff;
+  --text-secondary: #94accd;
+  --text-muted: #64809f;
+  --text-accent: #7dd3fc;
+  --text-danger: #fb7185;
+  --text-success: #4ade80;
+
+  /* Glass */
+  --glass-bg: rgba(148, 197, 255, 0.05);
+  --glass-bg-elevated: rgba(148, 197, 255, 0.09);
+  --glass-border: rgba(148, 197, 255, 0.13);
+  --glass-glow: rgba(56, 189, 248, 0.13);
+  --glass-inner: rgba(255, 255, 255, 0.03);
+}
+
+html, body {
+  background: var(--surface-1);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  /* Prevent horizontal overflow on full-width 412dp layout */
+  overflow-x: hidden;
+}
+
+/*
+  Edge-to-edge / gesture navigation.
+  viewport-fit=cover is set in layout.tsx so the app paints behind the system
+  bars. We then push content above the gesture strip using env(safe-area-inset-bottom).
+*/
+
+.body-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mb-safe-bottom {
+  margin-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Extra bottom clearance so the last card clears the fixed navbar. */
+.nav-scroll-pad {
+  padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Full-bleed screens (chat) cancel the shell's padding and sit exactly in the
+   viewport, with room left for the fixed navbar. */
+.full-bleed-screen {
+  margin: -1.25rem -1rem calc(-84px - env(safe-area-inset-bottom, 0px));
+  height: 100dvh;
+}
+
+.above-nav {
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Hide scrollbar while preserving scroll behaviour */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Glass surfaces ───────────────────────────────────────── */
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 0.5px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border-radius: 20px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(190, 225, 255, 0.08);
+}
+
+.glass-card-elevated {
+  background: var(--glass-bg-elevated);
+  border: 0.5px solid var(--glass-border);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.55),
+    0 0 32px rgba(14, 165, 233, 0.06),
+    inset 0 1px 0 rgba(190, 225, 255, 0.11);
+}
+
+.glass-input {
+  background: rgba(148, 197, 255, 0.045);
+  border: 0.5px solid var(--border-accent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px;
+  box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.glass-input:focus-within {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.16);
+}
+
+/* ── Ambient background ──────────────────────────────────── */
+
+.tron-bg {
+  background-color: #04060c;
+}
+
+/* Orbs sit above the base background (z-index 0) but behind the content */
+.tron-bg::before,
+.tron-bg::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tron-bg::before {
+  width: 120vw;
+  height: 120vw;
+  top: -10vh;
+  right: -30vw;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.26) 0%, rgba(14, 165, 233, 0.05) 40%, transparent 70%);
+  animation: drift1 22s ease-in-out infinite alternate;
+}
+
+.tron-bg::after {
+  width: 140vw;
+  height: 140vw;
+  bottom: -20vh;
+  left: -40vw;
+  background: radial-gradient(circle, rgba(30, 64, 175, 0.28) 0%, rgba(30, 64, 175, 0.05) 40%, transparent 70%);
+  animation: drift2 28s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-10vw, 10vh) scale(1.12); }
+}
+
+@keyframes drift2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(15vw, -10vh) scale(1.05); }
+}
+
+/* Respect the system setting — no drifting orbs for anyone who asked for stillness. */
+@media (prefers-reduced-motion: reduce) {
+  .tron-bg::before,
+  .tron-bg::after {
+    animation: none;
+  }
+  .orb-dash-runner,
+  .orb-dot-runner,
+  .agent-avatar-wrapper {
+    animation: none;
+  }
+}
+
+/* ── Main content surface ────────────────────────────────── */
+
+.glass-main-surface {
+  position: relative;
+  background:
+    linear-gradient(
+      170deg,
+      rgba(148, 197, 255, 0.05) 0%,
+      rgba(148, 197, 255, 0.02) 45%,
+      rgba(14, 165, 233, 0.04) 100%
+    );
+  border-left:  0.5px solid rgba(148, 197, 255, 0.09);
+  border-right: 0.5px solid rgba(148, 197, 255, 0.09);
+  box-shadow:
+    inset  1px 0 0 rgba(148, 197, 255, 0.05),
+    inset -1px 0 0 rgba(148, 197, 255, 0.05),
+    inset  0  1px 0 rgba(148, 197, 255, 0.09),
+    0 0 70px rgba(14, 165, 233, 0.06);
+}
+
+/* Signal line along the top edge of the panel */
+.glass-main-surface::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(14, 165, 233, 0.5) 25%,
+    rgba(125, 211, 252, 0.95) 50%,
+    rgba(14, 165, 233, 0.5) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(14, 165, 233, 0),
+      0 4px 16px rgba(0, 0, 0, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 14px 4px rgba(56, 189, 248, 0.42),
+      0 4px 16px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ── Category colour dots ────────────────────────────────── */
+/* Kept distinguishable from each other, pulled toward the blue end so the
+   category chips sit inside the theme instead of fighting it. */
+
+.c-blue   { background-color: #2563eb; color: #fff; }
+.c-teal   { background-color: #0d9488; color: #fff; }
+.c-purple { background-color: #6366f1; color: #fff; }
+.c-amber  { background-color: #0ea5e9; color: #04121f; }
+.c-green  { background-color: #10b981; color: #04121f; }
+.c-rose   { background-color: #f43f5e; color: #fff; }
+.c-indigo { background-color: #4f46e5; color: #fff; }
+.c-sky    { background-color: #38bdf8; color: #04121f; }
+.c-orange { background-color: #0284c7; color: #fff; }
+
+/* ── Utilities ───────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ── Nudge pill ──────────────────────────────────────────── */
+
+.nudge-pill {
+  background: var(--glass-bg);
+  border: 0.5px solid var(--glass-border);
+  border-left: 2px solid rgba(14, 165, 233, 0.55);
+  border-radius: 14px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.nudge-pill:hover {
+  background: var(--glass-bg-elevated);
+  border-left-color: rgba(125, 211, 252, 0.9);
+}
+
+/* ── Agent avatar ────────────────────────────────────────── */
+
+.agent-avatar-wrapper {
+  border-radius: 999px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.65), rgba(37, 99, 235, 0.35));
+  animation: glowPulse 4s infinite;
+}
+
+/* ── Orb pulse (FAB rings) ───────────────────────────────── */
+
+@keyframes orb-pulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(14, 165, 233, 0.55),
+      0 0 0 0 rgba(56, 189, 248, 0.28);
+  }
+  60% {
+    box-shadow:
+      0 0 0 8px rgba(14, 165, 233, 0),
+      0 0 0 16px rgba(14, 165, 233, 0);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(14, 165, 233, 0),
+      0 0 0 0 rgba(14, 165, 233, 0);
+  }
+}
+
+/* ── Meditation widget animations ────────────────────────── */
+
+@keyframes medit-glow {
+  0%, 100% {
+    opacity: 0.75;
+    stroke: #0ea5e9;
+    filter: drop-shadow(0 0 3px rgba(14, 165, 233, 0.5));
+  }
+  50% {
+    opacity: 1;
+    stroke: #7dd3fc;
+    filter: drop-shadow(0 0 8px rgba(125, 211, 252, 0.95)) drop-shadow(0 0 14px rgba(14, 165, 233, 0.7));
+  }
+}
+
+@keyframes medit-dot {
+  0%, 100% {
+    opacity: 0.6;
+    fill: #0ea5e9;
+  }
+  50% {
+    opacity: 1;
+    fill: #7dd3fc;
+    filter: drop-shadow(0 0 6px rgba(125, 211, 252, 0.9));
+  }
+}
+
+@keyframes medit-ray {
+  0%, 100% { opacity: 0.2; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes medit-ring-outer {
+  0%, 100% { transform: scale(1);    opacity: 0.4; }
+  50%       { transform: scale(1.18); opacity: 0.9; }
+}
+
+@keyframes medit-ring-inner {
+  0%, 100% { transform: scale(1);    opacity: 0.6; }
+  50%       { transform: scale(1.25); opacity: 1;   }
+}
+
+/* ── Orbiting light runner along the orb outline ─────────── */
+
+@keyframes orb-runner-dash {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -150.796px; }
+}
+
+@keyframes orb-runner-dot {
+  0%   { stroke-dashoffset: -11.5px; }
+  100% { stroke-dashoffset: -162.296px; }
+}
+
+.orb-dash-runner {
+  animation: orb-runner-dash 2.8s linear infinite;
+}
+
+.orb-dot-runner {
+  animation: orb-runner-dot 2.8s linear infinite;
+}

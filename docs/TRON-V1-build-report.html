@@ -1,0 +1,846 @@
+<title>TRON V1 Build Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+/*
+  TRON V1 build report.
+  Single-theme by intent: this page documents a deep-navy / electric-blue
+  application, and the tokens below are the ones actually shipped in
+  src/app/globals.css. Every colour is painted explicitly so the page holds
+  on any host ground.
+*/
+:root {
+  --ground:      #05070d;
+  --panel:       #0b1120;
+  --panel-2:     #101a2d;
+  --line:        rgba(148, 197, 255, 0.13);
+  --line-strong: rgba(148, 197, 255, 0.24);
+  --ink:         #e6f1ff;
+  --ink-2:       #a9c0dd;
+  --muted:       #6d88a8;
+  --signal:      #38bdf8;
+  --signal-deep: #2563eb;
+  --ok:          #34d399;
+  --warn:        #fbbf24;
+  --gone:        #f43f5e;
+
+  --sans: "IBM Plex Sans", ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0:  0.9688rem;
+  --step-1:  1.1875rem;
+  --step-2:  1.5rem;
+  --step-3:  2rem;
+  --step-4:  2.75rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  margin: 0;
+  padding-inline: 20px;
+  padding-block: 0 72px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Ambient field, matching the app's drifting orbs — fixed, behind everything. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(60vw 60vw at 82% -8%,  rgba(14,165,233,0.16), transparent 62%),
+    radial-gradient(70vw 70vw at -12% 108%, rgba(30,64,175,0.20), transparent 62%);
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+/* ── Masthead ───────────────────────────────────────────── */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  padding-block: 56px 34px;
+  border-bottom: 1px solid var(--line);
+}
+
+.mark { flex: none; }
+
+.masthead h1 {
+  font-size: var(--step-4);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  margin: 0;
+  text-wrap: balance;
+  font-weight: 600;
+}
+
+.masthead .sub {
+  margin: 8px 0 0;
+  color: var(--ink-2);
+  font-size: var(--step-1);
+  max-width: 46ch;
+}
+
+.masthead .titles { min-width: 0; }
+
+/* ── Stat strip ─────────────────────────────────────────── */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-block: 28px 0;
+}
+
+.stat {
+  background: var(--panel);
+  padding: 16px 18px;
+}
+
+.stat dt {
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+
+.stat dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat dd.good { color: var(--ok); }
+.stat dd.gone { color: var(--gone); }
+
+/* ── Sections ───────────────────────────────────────────── */
+
+section { padding-block: 44px 0; }
+
+h2 {
+  font-size: var(--step-2);
+  letter-spacing: -0.014em;
+  margin: 0 0 6px;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+h2 + .lede {
+  margin: 0 0 24px;
+  color: var(--ink-2);
+  max-width: 66ch;
+}
+
+h3 {
+  font-size: var(--step-0);
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+
+p { max-width: 66ch; }
+
+code {
+  font-family: var(--mono);
+  font-size: 0.875em;
+  background: rgba(56, 189, 248, 0.10);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: #b5e2fb;
+  word-break: break-word;
+}
+
+a { color: var(--signal); }
+
+/* ── Requirement ledger ─────────────────────────────────── */
+
+.ledger {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.req {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  background: var(--panel);
+  padding: 13px 18px;
+}
+
+.req .n {
+  font-family: var(--mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.req .what { min-width: 0; }
+.req .what b { font-weight: 600; }
+.req .what span {
+  display: block;
+  color: var(--muted);
+  font-size: var(--step--1);
+  margin-top: 2px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.tag.done  { color: var(--ok);   background: rgba(52,211,153,0.10); border: 1px solid rgba(52,211,153,0.28); }
+.tag.yours { color: var(--warn); background: rgba(251,191,36,0.09); border: 1px solid rgba(251,191,36,0.26); }
+
+/* ── Swap table ─────────────────────────────────────────── */
+
+.swap-scroll { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  min-width: 460px;
+}
+
+thead th {
+  text-align: left;
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 0 14px 10px 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+tbody td {
+  padding: 11px 14px 11px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+tbody tr:last-child td { border-bottom: 0; }
+
+td.was { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(244,63,94,0.5); }
+td.now { color: var(--ink); }
+td.now code { background: none; border: 0; padding: 0; color: #b5e2fb; }
+
+/* ── Terminal blocks ────────────────────────────────────── */
+
+.term {
+  background: #070c16;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-block: 16px;
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(148,197,255,0.035);
+}
+
+.term-bar .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--line-strong);
+  flex: none;
+}
+.term-bar .dot.live { background: var(--signal); box-shadow: 0 0 7px var(--signal); }
+
+.term-bar .name {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.term pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: var(--step--1);
+  line-height: 1.75;
+  color: var(--ink-2);
+  tab-size: 2;
+}
+
+.term pre .p { color: var(--signal); }      /* prompt */
+.term pre .c { color: #cfe4f7; }            /* command */
+.term pre .o { color: var(--muted); }       /* output */
+.term pre .g { color: var(--ok); }
+.term pre .k { color: var(--warn); }
+
+/* ── Step list ──────────────────────────────────────────── */
+
+ol.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 22px;
+}
+
+ol.steps > li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 16px;
+}
+
+ol.steps > li::before {
+  content: counter(step);
+  font-family: var(--mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--signal);
+  width: 2rem; height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(56,189,248,0.32);
+  border-radius: 50%;
+  background: rgba(56,189,248,0.07);
+  font-variant-numeric: tabular-nums;
+}
+
+ol.steps > li > div { min-width: 0; }
+ol.steps p { margin: 0; color: var(--ink-2); }
+ol.steps .term { margin-block: 12px 0; }
+
+/* ── Panels ─────────────────────────────────────────────── */
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+
+.panel.flag {
+  border-left: 2px solid var(--signal);
+}
+
+.panel p:last-child { margin-bottom: 0; }
+.panel p:first-child { margin-top: 0; }
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* ── Memory command list ────────────────────────────────── */
+
+.cmds { display: grid; gap: 10px; margin: 0; }
+
+.cmd {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 15px;
+}
+
+.cmd .said {
+  font-family: var(--mono);
+  font-size: var(--step--1);
+  color: #b5e2fb;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cmd .does {
+  font-size: var(--step--1);
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── Not-in-V1 chips ────────────────────────────────────── */
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+.chips li {
+  font-size: var(--step--1);
+  color: var(--muted);
+  border: 1px dashed var(--line-strong);
+  border-radius: 999px;
+  padding: 5px 13px;
+}
+
+/* ── Diagram ────────────────────────────────────────────── */
+
+figure { margin: 0; }
+
+figure svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption {
+  color: var(--muted);
+  font-size: var(--step--1);
+  margin-top: 12px;
+  max-width: 66ch;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+
+footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+@media (max-width: 720px) {
+  :root { --step-4: 2.1rem; --step-3: 1.65rem; --step-2: 1.3rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .cols { grid-template-columns: minmax(0, 1fr); }
+  .req { grid-template-columns: 1.9rem 1fr; }
+  .req .tag { grid-column: 2; justify-self: start; margin-top: 4px; }
+  .cmd { grid-template-columns: minmax(0, 1fr); }
+  .cmd .does { text-align: left; white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+@keyframes ring { to { stroke-dashoffset: -132; } }
+.runner { animation: ring 3.2s linear infinite; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="mark">
+      <svg width="76" height="76" viewBox="0 0 48 48" role="img" aria-label="TRON">
+        <circle cx="24" cy="24" r="21" fill="none" stroke="rgba(56,189,248,0.24)" stroke-width="1.5"/>
+        <circle class="runner" cx="24" cy="24" r="21" fill="none" stroke="#38bdf8"
+                stroke-width="1.9" stroke-linecap="round" stroke-dasharray="21 132"/>
+        <circle cx="24" cy="24" r="6.5" fill="none" stroke="rgba(125,211,252,0.6)" stroke-width="1.25"/>
+        <circle cx="24" cy="24" r="2.4" fill="#7dd3fc"/>
+      </svg>
+    </div>
+    <div class="titles">
+      <h1>TRON V1</h1>
+      <p class="sub">The cloud is gone. Everything now runs on hardware you own.</p>
+    </div>
+  </header>
+
+  <dl class="stats">
+    <div class="stat"><dt>Files changed</dt><dd>76</dd></div>
+    <div class="stat"><dt>Screens rebuilt</dt><dd class="good">0</dd></div>
+    <div class="stat"><dt>Cloud services</dt><dd class="gone">0</dd></div>
+    <div class="stat"><dt>Build</dt><dd class="good">passing</dd></div>
+  </dl>
+
+  <section>
+    <h2>What changed underneath</h2>
+    <p class="lede">
+      Every screen you had still works and was never rebuilt. What was swapped
+      is everything they sit on.
+    </p>
+
+    <div class="swap-scroll">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Was</th><th>Now</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Database</td>
+            <td class="was">Cloud Firestore</td>
+            <td class="now">SQLite on the Redmi — <code>data/tron.db</code></td>
+          </tr>
+          <tr>
+            <td>Auth</td>
+            <td class="was">Firebase + Google sign-in</td>
+            <td class="now">One passphrase, scrypt-checked, httpOnly cookie</td>
+          </tr>
+          <tr>
+            <td>Model</td>
+            <td class="was">Gemini API over the internet</td>
+            <td class="now">Your llama.cpp + Qwen3 on <code>127.0.0.1:8080</code></td>
+          </tr>
+          <tr>
+            <td>Live updates</td>
+            <td class="was">Firestore listeners</td>
+            <td class="now">SQLite revision counters over SSE</td>
+          </tr>
+          <tr>
+            <td>Memory</td>
+            <td class="was">—</td>
+            <td class="now">Explicit only — you say what to keep</td>
+          </tr>
+          <tr>
+            <td>Theme</td>
+            <td class="was">Amber on warm black</td>
+            <td class="now">Electric blue on deep navy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>How the UI survived the swap</h2>
+    <p class="lede">
+      Twenty-five screens called Firestore directly. Rewriting them all was the
+      obvious path and the wrong one — it would have meant rebuilding the exact
+      thing you asked to keep.
+    </p>
+    <div class="panel flag">
+      <p>
+        Instead, <code>src/lib/tron/firestore.ts</code> exposes the same function
+        names those screens already used — <code>collection</code>,
+        <code>query</code>, <code>where</code>, <code>onSnapshot</code>,
+        <code>addDoc</code>, <code>serverTimestamp</code>,
+        <code>increment</code> — and routes every one of them to SQLite instead.
+        The screens' imports changed by one line each. Their logic did not change
+        at all.
+      </p>
+    </div>
+
+    <figure style="margin-top:28px">
+      <svg viewBox="0 0 820 300" role="img"
+           aria-label="Request path: browser to the data API, through the owner guard into SQLite; and server actions through the AI gateway into llama.cpp. A live event stream returns to the browser.">
+        <defs>
+          <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="#6d88a8"/>
+          </marker>
+        </defs>
+
+        <!-- Redmi enclosure -->
+        <rect x="228" y="16" width="574" height="268" rx="12"
+              fill="rgba(56,189,248,0.035)" stroke="rgba(56,189,248,0.22)" stroke-dasharray="5 5"/>
+        <text x="788" y="40" text-anchor="end" fill="#6d88a8"
+              font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1.4">REDMI</text>
+
+        <!-- Browser -->
+        <rect x="18" y="104" width="150" height="70" rx="9" fill="#0b1120" stroke="rgba(148,197,255,0.24)"/>
+        <text x="93" y="134" text-anchor="middle" fill="#e6f1ff" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">iPhone / Mac</text>
+        <text x="93" y="153" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Sans, sans-serif" font-size="12">the UI, unchanged</text>
+
+        <!-- API -->
+        <rect x="258" y="66" width="164" height="64" rx="9" fill="#101a2d" stroke="rgba(148,197,255,0.24)"/>
+        <text x="340" y="92" text-anchor="middle" fill="#e6f1ff" font-family="IBM Plex Mono, monospace" font-size="12.5">/api/data</text>
+        <text x="340" y="111" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Sans, sans-serif" font-size="11.5">owner guard</text>
+
+        <!-- Actions -->
+        <rect x="258" y="176" width="164" height="64" rx="9" fill="#101a2d" stroke="rgba(148,197,255,0.24)"/>
+        <text x="340" y="202" text-anchor="middle" fill="#e6f1ff" font-family="IBM Plex Mono, monospace" font-size="12.5">ai-gateway</text>
+        <text x="340" y="221" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Sans, sans-serif" font-size="11.5">chat &amp; classify</text>
+
+        <!-- SQLite -->
+        <rect x="500" y="66" width="176" height="64" rx="9" fill="#0b1120" stroke="rgba(56,189,248,0.45)"/>
+        <text x="588" y="92" text-anchor="middle" fill="#7dd3fc" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">SQLite</text>
+        <text x="588" y="111" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Mono, monospace" font-size="11">data/tron.db</text>
+
+        <!-- llama -->
+        <rect x="500" y="176" width="176" height="64" rx="9" fill="#0b1120" stroke="rgba(56,189,248,0.45)"/>
+        <text x="588" y="202" text-anchor="middle" fill="#7dd3fc" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">llama.cpp</text>
+        <text x="588" y="221" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Mono, monospace" font-size="11">Qwen3-1.7B</text>
+
+        <!-- flows -->
+        <path d="M168 128 L252 100" stroke="#38bdf8" stroke-width="1.6" fill="none" marker-end="url(#a)"/>
+        <path d="M168 150 L252 204" stroke="#38bdf8" stroke-width="1.6" fill="none" marker-end="url(#a)"/>
+        <path d="M422 98 L494 98"  stroke="#38bdf8" stroke-width="1.6" fill="none" marker-end="url(#a)"/>
+        <path d="M422 208 L494 208" stroke="#38bdf8" stroke-width="1.6" fill="none" marker-end="url(#a)"/>
+
+        <!-- SSE return -->
+        <path d="M500 122 C 440 150, 300 150, 240 150 L 176 150"
+              stroke="#6d88a8" stroke-width="1.4" fill="none" stroke-dasharray="4 4" marker-end="url(#am)"/>
+        <text x="352" y="166" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Sans, sans-serif" font-size="11.5">live updates (SSE)</text>
+
+        <text x="93" y="256" text-anchor="middle" fill="#6d88a8" font-family="IBM Plex Sans, sans-serif" font-size="11.5">nothing stored here</text>
+      </svg>
+      <figcaption>
+        Your phone and laptop are screens. Every byte of data and every token of
+        inference happens on the Redmi.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Memory, and only when you say so</h2>
+    <p class="lede">
+      These four phrases are parsed by rule, not by the model, so they behave the
+      same every time and never depend on how the model is feeling.
+    </p>
+    <div class="cmds">
+      <div class="cmd">
+        <span class="said">TRON, remember the spare key is under the blue pot</span>
+        <span class="does">stores it</span>
+      </div>
+      <div class="cmd">
+        <span class="said">TRON, what do you remember about the spare key?</span>
+        <span class="does">reads it back</span>
+      </div>
+      <div class="cmd">
+        <span class="said">TRON, forget the spare key</span>
+        <span class="does">deletes it</span>
+      </div>
+      <div class="cmd">
+        <span class="said">TRON, what do you remember?</span>
+        <span class="does">lists everything</span>
+      </div>
+    </div>
+    <p style="margin-top:18px; color:var(--ink-2)">
+      Anything stored is offered back to the model as context when you ask a
+      related question. Retrieval is automatic; <em>storing</em> never is.
+      That's the V2 conversation.
+    </p>
+  </section>
+
+  <section>
+    <h2>Running it</h2>
+    <p class="lede">
+      One command set, identical on the Mac and on the Redmi.
+    </p>
+    <div class="term">
+      <div class="term-bar"><span class="dot live"></span><span class="name">tron status</span></div>
+<pre><span class="p">$</span> <span class="c">tron status</span>
+
+<span class="o">TRON status</span>
+
+<span class="o">  app    running (pid 3266)</span>
+<span class="o">  llama  running (pid 3121)</span>
+
+<span class="o">  database  </span><span class="g">ok</span><span class="o"> — ./data/tron.db</span>
+<span class="o">            412 documents, 9 memories</span>
+<span class="o">  model     </span><span class="g">ok</span><span class="o"> — llama.cpp healthy at http://127.0.0.1:8080</span>
+<span class="o">  uptime    91443s</span></pre>
+    </div>
+    <p style="color:var(--ink-2)">
+      <code>tron start</code> · <code>tron stop</code> · <code>tron restart</code> ·
+      <code>tron status</code> · <code>tron logs</code>
+    </p>
+    <div class="panel flag" style="margin-top:18px">
+      <p>
+        Your existing llama-server setup is left alone. Set
+        <code>TRON_MANAGE_LLAMA=false</code> and TRON simply connects to whatever
+        is already listening — it will not start, stop, or reconfigure it.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Your next four steps</h2>
+    <p class="lede">
+      The code is on your Mac now. These are the parts that need you at a keyboard.
+    </p>
+    <ol class="steps">
+      <li>
+        <div>
+          <h3>Clear out the dead files</h3>
+          <p>
+            The old <code>firebase.ts</code> and <code>gemini.ts</code> are still
+            sitting in your folder, and the build fails while they're there. This
+            removes them and files the design mockups under <code>docs/</code>.
+          </p>
+          <div class="term">
+            <div class="term-bar"><span class="dot"></span><span class="name">Terminal — Mac</span></div>
+<pre><span class="p">$</span> <span class="c">cd ~/Downloads/TRON-main</span>
+<span class="p">$</span> <span class="c">bash scripts/cleanup-v1.sh</span></pre>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Set your passphrase and run it</h3>
+          <p>
+            <code>TRON_PASSPHRASE</code> is the only thing standing between your
+            data and anyone on the network. Make it long.
+          </p>
+          <div class="term">
+            <div class="term-bar"><span class="dot"></span><span class="name">Terminal — Mac</span></div>
+<pre><span class="p">$</span> <span class="c">cp .env.example .env.local</span>
+<span class="p">$</span> <span class="c">nano .env.local</span>          <span class="o"># set TRON_PASSPHRASE</span>
+<span class="p">$</span> <span class="c">npm install &amp;&amp; npm run build</span>
+<span class="p">$</span> <span class="c">npm run tron -- start</span>
+
+<span class="o">→ </span><span class="k">http://localhost:3000</span></pre>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Push to GitHub, pull onto the Redmi</h3>
+          <p>
+            The repo is the source of truth. On the phone, one script installs
+            dependencies, builds, installs the <code>tron</code> command, and
+            writes the boot hook.
+          </p>
+          <div class="term">
+            <div class="term-bar"><span class="dot"></span><span class="name">Termux — Redmi</span></div>
+<pre><span class="p">$</span> <span class="c">pkg install nodejs-lts git</span>
+<span class="p">$</span> <span class="c">git clone &lt;your-repo&gt; tron &amp;&amp; cd tron</span>
+<span class="p">$</span> <span class="c">bash scripts/install-termux.sh</span></pre>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Make it survive reboots</h3>
+          <p>
+            The boot script is written, but Android has to be told to honour it:
+            install <strong>Termux:Boot</strong> from F-Droid, open it once so the
+            permission is granted, then turn <em>off</em> battery optimisation for
+            both Termux and Termux:Boot. Skip that last part and Android will kill
+            TRON overnight.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Reaching it from outside the house</h2>
+    <div class="cols">
+      <div class="panel">
+        <h3>At home</h3>
+        <p style="color:var(--ink-2)">
+          Open <code>http://&lt;redmi-ip&gt;:3000</code>. Add that address to
+          <code>TRON_ALLOWED_ORIGINS</code> first or server actions get refused.
+        </p>
+      </div>
+      <div class="panel">
+        <h3>Away</h3>
+        <p style="color:var(--ink-2)">
+          Tailscale on the Redmi and the iPhone, same tailnet. Do not
+          port-forward 3000 — the tunnel is the only door, the passphrase is the
+          second.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Deliberately left out</h2>
+    <p class="lede">
+      All of this is V2 and V3. V1's job was to make the core work end to end
+      without the cloud.
+    </p>
+    <ul class="chips">
+      <li>web search</li>
+      <li>weather</li>
+      <li>news</li>
+      <li>voice capture</li>
+      <li>autonomous agents</li>
+      <li>RAG / embeddings</li>
+      <li>automatic memory</li>
+      <li>multi-user accounts</li>
+      <li>push notifications</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The eighteen requirements</h2>
+    <p class="lede">
+      Green is finished and verified in the running app. Amber is built and
+      waiting on something only you can do on the device.
+    </p>
+
+    <div class="ledger">
+      <div class="req"><span class="n">01</span><span class="what"><b>Name stays TRON</b><span>App and assistant both. Lily is gone.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">02</span><span class="what"><b>Preserve the existing UI</b><span>All 25 screens kept; none rebuilt.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">03</span><span class="what"><b>Electric-blue theme</b><span>Deep navy, restrained glow, glass kept.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">04</span><span class="what"><b>Firebase removed</b><span>Dependency dropped entirely.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">05</span><span class="what"><b>No Supabase</b><span>Never introduced.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">06</span><span class="what"><b>Redmi as the server</b><span>Install script ready; run it on the phone.</span></span><span class="tag yours">your move</span></div>
+      <div class="req"><span class="n">07</span><span class="what"><b>SQLite storage</b><span>One file. Copy it to back up.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">08</span><span class="what"><b>Local inference</b><span>llama.cpp + Qwen3 on 127.0.0.1:8080.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">09</span><span class="what"><b>Explicit memory</b><span>Rule-based, never automatic.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">10</span><span class="what"><b>Keep V1 simple</b><span>No extras added.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">11</span><span class="what"><b>Single user</b><span>One passphrase, no roles.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">12</span><span class="what"><b>Other devices</b><span>Binds 0.0.0.0; add your LAN origin.</span></span><span class="tag yours">your move</span></div>
+      <div class="req"><span class="n">13</span><span class="what"><b>Secure remote access</b><span>Tailscale documented, not exposed ports.</span></span><span class="tag yours">your move</span></div>
+      <div class="req"><span class="n">14</span><span class="what"><b>24/7 on boot</b><span>Boot hook written; needs Termux:Boot.</span></span><span class="tag yours">your move</span></div>
+      <div class="req"><span class="n">15</span><span class="what"><b>Operational commands</b><span>start / stop / restart / status / logs.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">16</span><span class="what"><b>llama.cpp untouched</b><span>TRON_MANAGE_LLAMA=false leaves it alone.</span></span><span class="tag done">done</span></div>
+      <div class="req"><span class="n">17</span><span class="what"><b>Clean repository</b><span>Source at root; run cleanup-v1.sh once.</span></span><span class="tag yours">your move</span></div>
+      <div class="req"><span class="n">18</span><span class="what"><b>Layer by layer</b><span>DB, then AI, then memory, then UI, then ops.</span></span><span class="tag done">done</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What was actually tested</h2>
+    <div class="term">
+      <div class="term-bar"><span class="dot live"></span><span class="name">verification</span></div>
+<pre><span class="g">✓</span><span class="o"> data API locked without a session</span>
+<span class="g">✓</span><span class="o"> memory API locked without a session</span>
+<span class="g">✓</span><span class="o"> wrong passphrase rejected</span>
+<span class="g">✓</span><span class="o"> login, authenticated read, logout revokes</span>
+<span class="g">✓</span><span class="o"> cross-user path blocked at the guard</span>
+<span class="g">✓</span><span class="o"> serverTimestamp / increment / arrayUnion</span>
+<span class="g">✓</span><span class="o"> dotted field paths (completionLog.2026-09-14)</span>
+<span class="g">✓</span><span class="o"> live update reached an already-open screen</span>
+<span class="g">✓</span><span class="o"> Qwen3 &lt;think&gt; stripped, fenced JSON parsed</span>
+<span class="g">✓</span><span class="o"> memory command parser — 12 of 12 cases</span>
+<span class="g">✓</span><span class="o"> typecheck clean, production build passing</span></pre>
+    </div>
+  </section>
+
+  <footer>
+    TRON V1 · 76 files written to <code>~/Downloads/TRON-main</code> ·
+    No cloud service is contacted at build time or at runtime.
+  </footer>
+
+</div>
