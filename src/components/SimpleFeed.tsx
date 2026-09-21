@@ -84,9 +84,9 @@ export default function SimpleFeed({
   }, [items, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href={backHref || "/menu"}
@@ -144,7 +144,7 @@ export default function SimpleFeed({
                       className="flex items-start gap-4 py-2.5 group cursor-pointer"
                     >
                       {/* Accent Dot on Spine */}
-                      <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/60 bg-[#18120a] flex items-center justify-center z-10 group-hover:border-sky-400 transition-colors">
+                      <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/60 bg-[#050a14] flex items-center justify-center z-10 group-hover:border-sky-400 transition-colors">
                         <span className="w-1.5 h-1.5 rounded-full bg-sky-400/70 group-hover:bg-sky-400 transition-colors" />
                       </div>
 

@@ -111,9 +111,9 @@ export default function TimelineDiary({
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href={tag === "gratitude" ? "/menu?item=gratitude" : "/menu?item=journal"}
@@ -142,7 +142,7 @@ export default function TimelineDiary({
           <button
             type="submit"
             disabled={!inputText.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-sky-400 text-[#18120a] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-sky-400 text-[#050a14] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
             title="Post entry"
           >
             <IconSend size={15} stroke={2.5} />
@@ -182,7 +182,7 @@ export default function TimelineDiary({
                           className="flex items-start gap-4 py-1.5 group"
                         >
                           {/* Accent Dot on Spine */}
-                          <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/70 bg-[#18120a] flex items-center justify-center z-10">
+                          <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/70 bg-[#050a14] flex items-center justify-center z-10">
                             <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
                           </div>
 

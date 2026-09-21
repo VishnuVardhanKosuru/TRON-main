@@ -130,11 +130,24 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-3 pb-4">
 
-      {/* ── Zone 1: Identity bar ───────────────────────── */}
+      {/* ── Zone 1: Identity bar + T.R.O.N. acronym ───────────────────────── */}
       <div className="flex items-start justify-between pt-2">
-        <div className="flex flex-col gap-1">
-          <p className="text-[17px] font-medium text-[var(--text-primary)] leading-none m-0">{AGENT_NAME}</p>
-          <p className="text-[11.5px] text-[var(--text-secondary)] m-0 leading-none opacity-80">Your virtual assistant</p>
+        <div className="flex flex-col gap-0.5">
+          <div className="flex items-center gap-0">
+            <span className="text-[19px] font-bold text-sky-400 tracking-wide" style={{ textShadow: '0 0 12px rgba(56,189,248,0.5)' }}>T</span>
+            <span className="text-[11px] font-medium text-[var(--text-muted)] mx-[1px]">·</span>
+            <span className="text-[19px] font-bold text-sky-400 tracking-wide" style={{ textShadow: '0 0 12px rgba(56,189,248,0.5)' }}>R</span>
+            <span className="text-[11px] font-medium text-[var(--text-muted)] mx-[1px]">·</span>
+            <span className="text-[19px] font-bold text-sky-400 tracking-wide" style={{ textShadow: '0 0 12px rgba(56,189,248,0.5)' }}>O</span>
+            <span className="text-[11px] font-medium text-[var(--text-muted)] mx-[1px]">·</span>
+            <span className="text-[19px] font-bold text-sky-400 tracking-wide" style={{ textShadow: '0 0 12px rgba(56,189,248,0.5)' }}>N</span>
+          </div>
+          <p className="text-[9.5px] text-[var(--text-muted)] m-0 leading-none tracking-[0.06em] font-mono uppercase">
+            <span className="text-sky-400/70 font-semibold">T</span>houghtful{' '}
+            <span className="text-sky-400/70 font-semibold">R</span>eactive{' '}
+            <span className="text-sky-400/70 font-semibold">O</span>rchestration{' '}
+            <span className="text-sky-400/70 font-semibold">N</span>ode
+          </p>
         </div>
         
         <div className="flex items-center gap-2 -translate-y-1">
@@ -298,22 +311,22 @@ export default function Home() {
             style={{ width: 70, height: 70, animation: "medit-ring-outer 3.5s ease-in-out infinite" }}
           />
 
-          {/* Inner orange border ring with flowing light runner */}
+          {/* Inner border ring with flowing light runner */}
           <div
             className="absolute rounded-full pointer-events-none flex items-center justify-center"
             style={{ width: 50, height: 50, animation: "medit-ring-inner 3s ease-in-out infinite" }}
           >
-            {/* Static base orange border */}
+            {/* Static base blue border */}
             <div className="absolute inset-0 rounded-full border border-sky-400/35" />
 
-            {/* Running light along the orange border outline: flowing yellow dash (-) & point */}
+            {/* Running light along the border outline: flowing cyan dash & point */}
             <svg
               className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
               viewBox="0 0 50 50"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Glowing yellow trailing dash (-) */}
+              {/* Glowing cyan trailing dash */}
               <circle
                 cx="25"
                 cy="25"
@@ -327,7 +340,7 @@ export default function Home() {
                   filter: "drop-shadow(0 0 4px #bae6fd) drop-shadow(0 0 8px #38bdf8)",
                 }}
               />
-              {/* Brilliant flowing yellow/white leading point */}
+              {/* Brilliant flowing white leading point */}
               <circle
                 cx="25"
                 cy="25"

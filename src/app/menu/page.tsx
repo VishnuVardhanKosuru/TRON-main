@@ -486,10 +486,10 @@ function MenuContent() {
       onWheel={handleWheel}
       className="relative w-[calc(100%+2rem)] -mx-4 -mt-5 -mb-[calc(84px+env(safe-area-inset-bottom,0px))] h-[100dvh] min-h-[100dvh] select-none overflow-hidden touch-none cursor-grab active:cursor-grabbing"
       style={{
-        background: "radial-gradient(circle at 40% 35%, #18120a 0%, #0d0a07 100%)",
+        background: "radial-gradient(circle at 40% 35%, #070d1a 0%, #04060c 100%)",
       }}
     >
-      {/* ── Futuristic Ambient Moving Glass Orange Lights ──────── */}
+      {/* ── Futuristic Ambient Moving Glass Blue Lights ──────── */}
       <motion.div
         className="absolute pointer-events-none rounded-full blur-[80px] z-0"
         style={{

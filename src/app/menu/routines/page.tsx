@@ -235,7 +235,7 @@ export default function RoutinesPage() {
               title={`${day.dateStr}: ${day.completed ? "Completed" : "Skipped"}`}
               className={`aspect-square rounded-[5px] flex items-center justify-center transition-all ${
                 day.completed
-                  ? "bg-sky-400 text-[#18120a] font-bold"
+                  ? "bg-sky-400 text-[#050a14] font-bold"
                   : "bg-white/5 border border-white/10"
               }`}
             >
@@ -318,7 +318,7 @@ export default function RoutinesPage() {
                                 e.stopPropagation();
                                 handleToggle(r.id);
                               }}
-                              className={`relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400 bg-[#18120a] flex items-center justify-center transition-all duration-300 z-10`}
+                              className={`relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400 bg-[#050a14] flex items-center justify-center transition-all duration-300 z-10`}
                             >
                               <AnimatePresence>
                                 {isJustCompleted && (
@@ -497,7 +497,7 @@ export default function RoutinesPage() {
                         onClick={() => setFormType(t)}
                         className={`py-1.5 text-[12.5px] font-medium rounded-lg capitalize transition-all ${
                           formType === t
-                            ? "bg-sky-400 text-[#18120a] font-semibold"
+                            ? "bg-sky-400 text-[#050a14] font-semibold"
                             : "text-white/60 hover:text-white"
                         }`}
                       >
@@ -569,7 +569,7 @@ export default function RoutinesPage() {
 
                 <button
                   type="submit"
-                  className="w-full mt-3 py-3 rounded-xl bg-sky-400 text-[#18120a] font-medium text-[15px] active:scale-[0.99] transition-transform"
+                  className="w-full mt-3 py-3 rounded-xl bg-sky-400 text-[#050a14] font-medium text-[15px] active:scale-[0.99] transition-transform"
                 >
                   Create routine
                 </button>
@@ -686,7 +686,7 @@ export default function RoutinesPage() {
                   className={`flex-1 py-2.5 rounded-xl text-[14px] font-medium transition-all ${
                     selectedRoutine.completedToday
                       ? "bg-white/10 text-white/80 border border-white/10"
-                      : "bg-sky-400 text-[#18120a]"
+                      : "bg-sky-400 text-[#050a14]"
                   }`}
                 >
                   {selectedRoutine.completedToday ? "Mark not completed" : "Mark completed today"}

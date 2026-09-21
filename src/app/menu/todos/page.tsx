@@ -188,7 +188,7 @@ export default function TodosPage() {
     const isCompleted = !!todo.completedAt;
     
     let dotBorder = dotColorClass;
-    let dotBg = "bg-[#18120a]";
+    let dotBg = "bg-[#050a14]";
     let textColor = "text-white/95";
     
     if (isCompleted || isJustCompleted) {

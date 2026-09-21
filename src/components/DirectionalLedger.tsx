@@ -243,9 +243,9 @@ export default function DirectionalLedger({
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href={mode === "ious" ? "/menu?item=iou" : "/menu?item=borrowed"}
@@ -258,7 +258,7 @@ export default function DirectionalLedger({
 
         <button
           onClick={() => setIsAddOpen(true)}
-          className="w-8 h-8 flex items-center justify-center rounded-full bg-sky-400 text-[#18120a] active:scale-95 transition-transform"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-sky-400 text-[#050a14] active:scale-95 transition-transform"
           title={`Add to ${title}`}
         >
           <IconPlus size={18} stroke={2.5} />
@@ -291,7 +291,7 @@ export default function DirectionalLedger({
                   <div className="flex flex-col gap-1">
                     <AnimatePresence>
                       {outgoingItems.map((it) =>
-                        renderRow(it, "border-sky-400/80 bg-[#18120a]")
+                        renderRow(it, "border-sky-400/80 bg-[#050a14]")
                       )}
                     </AnimatePresence>
                   </div>
@@ -314,7 +314,7 @@ export default function DirectionalLedger({
                   <div className="flex flex-col gap-1">
                     <AnimatePresence>
                       {incomingItems.map((it) =>
-                        renderRow(it, "border-white/40 bg-[#18120a]")
+                        renderRow(it, "border-white/40 bg-[#050a14]")
                       )}
                     </AnimatePresence>
                   </div>
@@ -325,7 +325,7 @@ export default function DirectionalLedger({
               {resolvedItems.length > 0 && (
                 <div className="flex flex-col gap-3 mt-4">
                   <div className="pl-6 relative">
-                    <div className="absolute top-0 bottom-0 left-[-24px] w-[30px] bg-[#18120a] z-0" />
+                    <div className="absolute top-0 bottom-0 left-[-24px] w-[30px] bg-[#050a14] z-0" />
 
                     <button
                       onClick={() => setIsResolvedExpanded(!isResolvedExpanded)}
@@ -412,7 +412,7 @@ export default function DirectionalLedger({
                       onClick={() => setFormDirection("outgoing")}
                       className={`py-2 text-[13px] font-medium rounded-lg transition-all ${
                         formDirection === "outgoing"
-                          ? "bg-sky-400 text-[#18120a] font-semibold"
+                          ? "bg-sky-400 text-[#050a14] font-semibold"
                           : "text-white/60 hover:text-white"
                       }`}
                     >
@@ -423,7 +423,7 @@ export default function DirectionalLedger({
                       onClick={() => setFormDirection("incoming")}
                       className={`py-2 text-[13px] font-medium rounded-lg transition-all ${
                         formDirection === "incoming"
-                          ? "bg-sky-400 text-[#18120a] font-semibold"
+                          ? "bg-sky-400 text-[#050a14] font-semibold"
                           : "text-white/60 hover:text-white"
                       }`}
                     >
@@ -518,7 +518,7 @@ export default function DirectionalLedger({
 
                 <button
                   type="submit"
-                  className="w-full mt-3 py-3 rounded-xl bg-sky-400 text-[#18120a] font-medium text-[15px] active:scale-[0.99] transition-transform"
+                  className="w-full mt-3 py-3 rounded-xl bg-sky-400 text-[#050a14] font-medium text-[15px] active:scale-[0.99] transition-transform"
                 >
                   Save to {title}
                 </button>

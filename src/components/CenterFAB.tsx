@@ -313,7 +313,7 @@ export default function CenterFAB() {
                       }}
                     />
 
-                    {/* Crisp white icon with subtle warm specular tone */}
+                    {/* Crisp white icon with subtle specular tone */}
                     <Icon
                       size={21}
                       strokeWidth={2}
@@ -386,12 +386,12 @@ export default function CenterFAB() {
           title={isOpen ? "Close" : "TRON (tap: Home · drag up: actions · hold: copilot)"}
         >
           {isOpen ? (
-            /* Open state: Clean X with subtle amber rim */
+            /* Open state: Clean X with subtle blue rim */
             <div
               className="w-full h-full rounded-full flex items-center justify-center transition-all"
               style={{
                 background:
-                  "linear-gradient(145deg, rgba(34, 30, 26, 0.94) 0%, rgba(18, 16, 14, 0.98) 100%)",
+                  "linear-gradient(145deg, rgba(12, 18, 34, 0.94) 0%, rgba(8, 12, 22, 0.98) 100%)",
                 border: "1px solid rgba(255, 255, 255, 0.16)",
                 boxShadow:
                   "0 12px 28px -4px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 0 0 1px rgba(56,189,248, 0.2)",
@@ -423,7 +423,7 @@ export default function CenterFAB() {
                   <AgentAvatar size={56} className="w-full h-full" />
                 </motion.div>
 
-                {/* Amber ring overlay */}
+                {/* Blue ring overlay */}
                 <span
                   className="absolute inset-0 rounded-full pointer-events-none"
                   style={{
@@ -515,7 +515,7 @@ export default function CenterFAB() {
                 <button
                   type="submit"
                   disabled={!tronMessage.trim()}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-sky-400 text-[#18120a] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-sky-400 text-[#050a14] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
                 >
                   <Send size={14} strokeWidth={2.5} />
                 </button>

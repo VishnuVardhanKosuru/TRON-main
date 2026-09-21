@@ -39,10 +39,10 @@ export default function SynapseScreen() {
     const unsubNodes = onSnapshot(qNodes, (snap) => {
       const colors: Record<string, string> = {
         person: "#0ea5e9",
-        project: "#b95030",
-        topic: "#c29438",
-        location: "#a28e34",
-        other: "#cdac3c"
+        project: "#6366f1",
+        topic: "#06b6d4",
+        location: "#10b981",
+        other: "#8b5cf6"
       };
       
       const realNodes: GraphNode[] = snap.docs.map(d => {

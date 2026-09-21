@@ -78,9 +78,9 @@ export default function FollowUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href="/menu?item=followup"
@@ -134,8 +134,8 @@ export default function FollowUpPage() {
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="flex items-start gap-4 py-2.5 group"
                     >
-                      {/* Amber Accent Dot on Spine */}
-                      <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/80 bg-[#18120a] flex items-center justify-center z-10">
+                      {/* Blue Accent Dot on Spine */}
+                      <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/80 bg-[#050a14] flex items-center justify-center z-10">
                         <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
                       </div>
 
@@ -160,7 +160,7 @@ export default function FollowUpPage() {
                         {/* "Mark as caught up" Action Button */}
                         <button
                           onClick={() => handleMarkCaughtUp(person.id)}
-                          className="px-3 py-1 rounded-full text-[12px] font-medium font-mono text-sky-400/90 bg-sky-400/10 border border-sky-400/30 hover:bg-sky-400 hover:text-[#18120a] active:scale-95 transition-all shrink-0 ml-3"
+                          className="px-3 py-1 rounded-full text-[12px] font-medium font-mono text-sky-400/90 bg-sky-400/10 border border-sky-400/30 hover:bg-sky-400 hover:text-[#050a14] active:scale-95 transition-all shrink-0 ml-3"
                           title="Reset follow-up timer without adding a note"
                         >
                           Caught up

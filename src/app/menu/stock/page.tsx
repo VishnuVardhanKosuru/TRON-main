@@ -69,9 +69,9 @@ export default function StockTrackingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href="/menu?item=stock"
@@ -100,7 +100,7 @@ export default function StockTrackingPage() {
           <button
             type="submit"
             disabled={!newItemName.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-sky-400 text-[#18120a] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-sky-400 text-[#050a14] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
             title="Add stock item"
           >
             <IconPlus size={16} stroke={2.5} />
@@ -117,7 +117,7 @@ export default function StockTrackingPage() {
             <div className="absolute top-2 bottom-6 left-[7px] w-[1px] bg-white/10 z-0" />
 
             <div className="flex flex-col gap-8 relative z-10">
-              {/* Group 1: Running low (Warning / Amber) */}
+              {/* Group 1: Running low (Warning) */}
               {runningLow.length > 0 && (
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-2 pl-8">
@@ -142,7 +142,7 @@ export default function StockTrackingPage() {
                           className="flex items-start gap-4 py-2 group cursor-pointer"
                           onClick={() => handleToggleLow(item.id)}
                         >
-                          {/* Amber Dot on Spine */}
+                          {/* Blue Dot on Spine */}
                           <div
                             onClick={(e) => {
                               e.stopPropagation();
@@ -211,7 +211,7 @@ export default function StockTrackingPage() {
                               e.stopPropagation();
                               handleToggleLow(item.id);
                             }}
-                            className="relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-white/20 bg-[#18120a] flex items-center justify-center z-10"
+                            className="relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-white/20 bg-[#050a14] flex items-center justify-center z-10"
                           />
 
                           {/* Item Content */}

@@ -53,14 +53,14 @@ const WIRE_X    = LEFT_PAD + LABEL_W;       // 62px
 const EVENT_X   = WIRE_X + 12;             // 74px
 const RIGHT_PAD = 16;
 
-// ── Per-type colours — warm amber-forward palette ─────────────────────────────
+// ── Per-type colours — cool blue-forward palette ──────────────────────────────
 const TYPE_STYLE: Record<EventType, { bg: string; border: string; icon: string }> = {
-  routine:  { bg: "rgba(28,20,10,0.94)",  border: "rgba(14,165,233,0.75)",   icon: "#0ea5e9" },  // amber
-  work:     { bg: "rgba(30,22,10,0.94)",  border: "rgba(194,148,56,0.70)",  icon: "#c29438" },  // golden amber
-  social:   { bg: "rgba(32,16,12,0.94)",  border: "rgba(185,80,45,0.70)",   icon: "#b95030" },  // terracotta
-  health:   { bg: "rgba(26,22,10,0.94)",  border: "rgba(162,142,52,0.65)",  icon: "#a28e34" },  // warm olive-gold
-  learning: { bg: "rgba(28,24,10,0.94)",  border: "rgba(205,172,60,0.65)",  icon: "#cdac3c" },  // warm gold
-  errand:   { bg: "rgba(30,18,8,0.94)",   border: "rgba(210,108,38,0.70)",  icon: "#d26c26" },  // burnt orange
+  routine:  { bg: "rgba(8,18,32,0.94)",   border: "rgba(14,165,233,0.75)",   icon: "#0ea5e9" },  // electric blue
+  work:     { bg: "rgba(12,12,30,0.94)",   border: "rgba(99,102,241,0.70)",   icon: "#6366f1" },  // indigo
+  social:   { bg: "rgba(18,10,28,0.94)",   border: "rgba(168,85,247,0.70)",   icon: "#a855f7" },  // purple
+  health:   { bg: "rgba(8,22,18,0.94)",    border: "rgba(16,185,129,0.65)",   icon: "#10b981" },  // emerald
+  learning: { bg: "rgba(8,20,26,0.94)",    border: "rgba(6,182,212,0.65)",    icon: "#06b6d4" },  // cyan
+  errand:   { bg: "rgba(8,22,22,0.94)",    border: "rgba(20,184,166,0.70)",   icon: "#14b8a6" },  // teal
 };
 
 function fmtHour(h: number) {
@@ -629,7 +629,7 @@ export default function CalendarPage() {
       <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden relative">
         <div className="relative" style={{ height: totalHeight }}>
 
-          {/* Continuous Amber Glow Wire */}
+          {/* Continuous Accent Glow Wire */}
           <div
             className="absolute top-0 bottom-0 pointer-events-none"
             style={{

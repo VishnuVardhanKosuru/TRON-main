@@ -111,12 +111,12 @@ export default function PeoplePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* ── View 1: Main People Hub List ─────────────────────────── */}
       {!selectedPerson ? (
         <>
           {/* Header */}
-          <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+          <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Link
                 href="/menu?item=people_notes"
@@ -130,7 +130,7 @@ export default function PeoplePage() {
             {/* + Add Person Button */}
             <button
               onClick={() => setIsAddOpen(true)}
-              className="px-3 py-1.5 rounded-full text-[12px] font-medium bg-sky-400 text-[#18120a] flex items-center gap-1.5 active:scale-95 transition-transform"
+              className="px-3 py-1.5 rounded-full text-[12px] font-medium bg-sky-400 text-[#050a14] flex items-center gap-1.5 active:scale-95 transition-transform"
             >
               <IconPlus size={14} stroke={2.5} />
               <span>Add person</span>
@@ -177,7 +177,7 @@ export default function PeoplePage() {
                         className="flex items-start gap-4 py-2.5 group cursor-pointer"
                       >
                         {/* Dot on Spine */}
-                        <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/70 bg-[#18120a] flex items-center justify-center z-10 group-hover:border-sky-400 transition-colors">
+                        <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/70 bg-[#050a14] flex items-center justify-center z-10 group-hover:border-sky-400 transition-colors">
                           <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
                         </div>
 
@@ -212,9 +212,9 @@ export default function PeoplePage() {
         </>
       ) : (
         /* ── View 2: Full Person Profile Screen ─────────────────── */
-        <div className="min-h-screen bg-[#18120a] text-white">
+        <div className="min-h-screen bg-[#050a14] text-white">
           {/* Profile Header */}
-          <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+          <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
             <button
               onClick={() => setSelectedPerson(null)}
               className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
@@ -288,7 +288,7 @@ export default function PeoplePage() {
                             key={capture.id}
                             className="flex items-start gap-4 py-1.5"
                           >
-                            <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/60 bg-[#18120a] flex items-center justify-center z-10">
+                            <div className="relative mt-[5px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/60 bg-[#050a14] flex items-center justify-center z-10">
                               <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80" />
                             </div>
 
@@ -381,7 +381,7 @@ export default function PeoplePage() {
 
                 <button
                   type="submit"
-                  className="w-full mt-2 py-3 rounded-xl bg-sky-400 text-[#18120a] font-medium text-[15px] active:scale-[0.99] transition-transform"
+                  className="w-full mt-2 py-3 rounded-xl bg-sky-400 text-[#050a14] font-medium text-[15px] active:scale-[0.99] transition-transform"
                 >
                   Create person profile
                 </button>

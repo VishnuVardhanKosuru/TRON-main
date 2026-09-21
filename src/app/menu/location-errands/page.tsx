@@ -139,9 +139,9 @@ export default function LocationErrandsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href="/menu?item=errands"
@@ -154,7 +154,7 @@ export default function LocationErrandsPage() {
 
         <button
           onClick={() => setIsAddOpen(true)}
-          className="w-8 h-8 flex items-center justify-center rounded-full bg-sky-400 text-[#18120a] active:scale-95 transition-transform"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-sky-400 text-[#050a14] active:scale-95 transition-transform"
           title="Add location errand"
         >
           <IconPlus size={18} stroke={2.5} />
@@ -210,7 +210,7 @@ export default function LocationErrandsPage() {
                                 e.stopPropagation();
                                 handleToggle(errand.id);
                               }}
-                              className="relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/80 bg-[#18120a] flex items-center justify-center transition-all duration-300 z-10"
+                              className="relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/80 bg-[#050a14] flex items-center justify-center transition-all duration-300 z-10"
                             >
                               <AnimatePresence>
                                 {isJustCompleted && (
@@ -247,7 +247,7 @@ export default function LocationErrandsPage() {
               {completedErrands.length > 0 && (
                 <div className="flex flex-col gap-3 mt-4">
                   <div className="pl-6 relative">
-                    <div className="absolute top-0 bottom-0 left-[-24px] w-[30px] bg-[#18120a] z-0" />
+                    <div className="absolute top-0 bottom-0 left-[-24px] w-[30px] bg-[#050a14] z-0" />
 
                     <button
                       onClick={() => setIsCompletedExpanded(!isCompletedExpanded)}
@@ -378,7 +378,7 @@ export default function LocationErrandsPage() {
                         onClick={() => setFormPlace(place)}
                         className={`px-2.5 py-1 rounded-full text-[12px] font-medium transition-all ${
                           formPlace === place
-                            ? "bg-sky-400 text-[#18120a] font-semibold"
+                            ? "bg-sky-400 text-[#050a14] font-semibold"
                             : "bg-white/5 text-white/60 border border-white/10 hover:border-white/20"
                         }`}
                       >
@@ -390,7 +390,7 @@ export default function LocationErrandsPage() {
 
                 <button
                   type="submit"
-                  className="w-full mt-3 py-3 rounded-xl bg-sky-400 text-[#18120a] font-medium text-[15px] active:scale-[0.99] transition-transform"
+                  className="w-full mt-3 py-3 rounded-xl bg-sky-400 text-[#050a14] font-medium text-[15px] active:scale-[0.99] transition-transform"
                 >
                   Add errand
                 </button>

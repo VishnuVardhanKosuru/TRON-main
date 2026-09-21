@@ -119,9 +119,9 @@ export default function ShoppingListPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18120a] text-white overflow-x-hidden selection:bg-sky-500/20">
+    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden selection:bg-sky-500/20">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#18120a]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#050a14]/85 backdrop-blur-xl border-b border-white/5 pt-12 pb-4 px-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href="/menu?item=shopping"
@@ -150,7 +150,7 @@ export default function ShoppingListPage() {
           <button
             type="submit"
             disabled={!newItemName.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-sky-400 text-[#18120a] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-sky-400 text-[#050a14] flex items-center justify-center disabled:opacity-30 disabled:bg-white/10 disabled:text-white/30 transition-all active:scale-95"
             title="Add item"
           >
             <IconPlus size={16} stroke={2.5} />
@@ -194,7 +194,7 @@ export default function ShoppingListPage() {
                             e.stopPropagation();
                             handleToggle(it.id);
                           }}
-                          className="relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/80 bg-[#18120a] flex items-center justify-center transition-all duration-200 z-10"
+                          className="relative mt-[3px] shrink-0 w-[15px] h-[15px] rounded-full border-[1.5px] border-sky-400/80 bg-[#050a14] flex items-center justify-center transition-all duration-200 z-10"
                         >
                           <AnimatePresence>
                             {isJustCompleted && (
@@ -232,7 +232,7 @@ export default function ShoppingListPage() {
               {recentlyBoughtItems.length > 0 && (
                 <div className="flex flex-col gap-3 mt-4">
                   <div className="pl-6 relative">
-                    <div className="absolute top-0 bottom-0 left-[-24px] w-[30px] bg-[#18120a] z-0" />
+                    <div className="absolute top-0 bottom-0 left-[-24px] w-[30px] bg-[#050a14] z-0" />
 
                     <button
                       onClick={() => setIsRecentExpanded(!isRecentExpanded)}
